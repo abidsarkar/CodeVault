@@ -38,3 +38,5 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>,
 )
 ```
+find how to implement react reducer toolkit in
+[text](https://redux-toolkit.js.org/tutorials/quick-start)
