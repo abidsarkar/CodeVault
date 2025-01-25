@@ -14,3 +14,27 @@ npm i react-router-dom@6.26.2
 ```sh
 npm install @reduxjs/toolkit react-redux@9.2.0
 ```
+# create store.js file inside src
+```sh
+import { configureStore } from '@reduxjs/toolkit'
+
+export const store = configureStore({
+  reducer: {},
+})
+```
+# warp main.jsx file with provider
+```sh
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+import { store } from './store.js'
+import { Provider } from 'react-redux'
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <Provider store={store} >
+    <App />
+    </Provider>
+  </StrictMode>,
+)
+```
