@@ -1,21 +1,30 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
+import React from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const ViewPaste = () => {
-  const {id} = useParams();
-  const allPastes = useSelector((state) => state.paste.pastes);
-  const paste = allPastes.filter((p) => p._id === id);
-  return (
-    <div className='flex flex-col justify-center p-4 gap-2 '>
-      <input className='bg-white text-black' type="text"
-      value={paste[0].title}
-      disabled />
-      <textarea className='bg-white' name="" id="" rows={15} disabled
-      value={paste[0].content}
-      ></textarea>
-    </div>
-  )
-}
+  const { id } = useParams();
+  const paste = useSelector((state) =>
+    state.paste.pastes.find((p) => p._id === id)
+  );
 
-export default ViewPaste
+  return (
+    <div className="p-6">
+      <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6">
+        {paste ? (
+          <>
+            <h1 className="text-2xl font-bold text-gray-800">{paste.title}</h1>
+            <p className="mt-4 text-gray-700">{paste.content}</p>
+            <p className="mt-4 text-gray-500 text-sm">
+              Created At: {new Date(paste.createdAt).toLocaleString()}
+            </p>
+          </>
+        ) : (
+          <p className="text-red-500">Paste not found!</p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default ViewPaste;

@@ -17,7 +17,7 @@ export const pasteSlice = createSlice({
       //add a check => paste already existed
       state.pastes.push(paste);
       localStorage.setItem("pastes", JSON.stringify(state.pastes));
-      toast("paste is created successfully");
+      toast.success("paste is created successfully");
     },
     updateToPastes: (state, action) => {
       const paste = action.payload;

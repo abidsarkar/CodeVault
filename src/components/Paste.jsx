@@ -8,63 +8,65 @@ const Paste = () => {
   const pastes = useSelector((state) => state.paste.pastes);
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
+
   const filteredData = pastes.filter((paste) =>
     paste.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  //delete function call
+
   function handleDelete(pasteId) {
     dispatch(removeFromPastes(pasteId));
   }
-  //copy function
 
   return (
-    <div className="flex flex-col justify-center items-center gap-4">
-      <input
-        className="p-2 rounded-2xl min-w-[400px] mt-5"
-        type="search"
-        placeholder="search here"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <div className="flex flex-col gap-5 w-full ">
-        {filteredData.length > 0 &&
-          filteredData.map((paste) => {
-            return (
-              <div
-                className="block border border-black rounded p-2  "
-                key={paste?._id}
+    <div className="p-6">
+      <div className="flex flex-col items-center">
+        <input
+          className="border border-gray-300 rounded-lg p-2 w-full max-w-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          type="search"
+          placeholder="Search pastes..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {filteredData.map((paste) => (
+          <div
+            key={paste._id}
+            className="border rounded-lg shadow-lg p-4 hover:shadow-xl transition"
+          >
+            <h3 className="text-lg font-semibold text-gray-800">{paste.title}</h3>
+            <p className="text-gray-600 truncate">{paste.content}</p>
+            <div className="flex justify-between items-center mt-4">
+              <NavLink
+                to={`/?pasteId=${paste._id}`}
+                className="text-blue-500 hover:underline"
               >
-                <div>{paste.title}</div>
-                <div className="max-h-24 overflow-hidden">{paste.content}</div>
-                <div className="flex flex-row gap-4 place-content-evenly">
-                  <button className="bg-blue-300 p-2 rounded">
-                    <NavLink
-                    to={`/?pasteId=${paste?._id}`}>Edit</NavLink>
-                  </button>
-                  <button className="bg-blue-300 p-2 rounded">
-                    <NavLink to={`/pastes/${paste?._id}`}>View</NavLink>
-                  </button>
-                  <button
-                    className="bg-blue-300 p-2 rounded"
-                    onClick={() => handleDelete(paste?._id)}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    className="bg-blue-300 p-2 rounded"
-                    onClick={() => {
-                      navigator.clipboard.writeText(paste?.content);
-                      toast.success("copy to clipboard");
-                    }}
-                  >
-                    Copy
-                  </button>
-                  <button className="bg-blue-300 p-2 rounded">Share</button>
-                </div>
-                <div>{paste.createdAt}</div>
-              </div>
-            );
-          })}
+                Edit
+              </NavLink>
+              <NavLink
+                to={`/pastes/${paste._id}`}
+                className="text-green-500 hover:underline"
+              >
+                View
+              </NavLink>
+              <button
+                onClick={() => handleDelete(paste._id)}
+                className="text-red-500 hover:underline"
+              >
+                Delete
+              </button>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(paste.content);
+                  toast.success("Copied to clipboard!");
+                }}
+                className="text-blue-500 hover:underline"
+              >
+                Copy
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
