@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { addToPastes, updateToPastes } from "../redux/pasteSlice";
 
 const Home = () => {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const pasteId = searchParams.get("pasteId");
-
+  const dispatch = useDispatch();
   function createPaste() {
     const paste = {
       title: title,
@@ -14,6 +16,18 @@ const Home = () => {
       _id: pasteId || Date.now().toString(36),
       createdAt: new Date().toISOString(),
     };
+    if(pasteId){
+      //update
+      dispatch(updateToPastes(paste));
+    }
+    else{
+      //create
+      dispatch(addToPastes(paste));
+    }
+    //after creation and updataio
+    setTitle("");
+    setValue("");
+    setSearchParams({});
   }
   return (
     <div className="flex flex-col justify-center items-center">
