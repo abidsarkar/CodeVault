@@ -15,9 +15,20 @@ export const pasteSlice = createSlice({
     addToPastes: (state, action) => {
       const paste = action.payload;
       //add a check => paste already existed
-      state.pastes.push(paste);
-      localStorage.setItem("pastes", JSON.stringify(state.pastes));
-      toast.success("paste is created successfully");
+      const isDuplicate = state.pastes.some((existingPest) =>
+      existingPest.title === paste.title &&
+      existingPest.content === paste.content
+      );
+
+      if(!isDuplicate){
+        state.pastes.push(paste);
+        localStorage.setItem("pastes", JSON.stringify(state.pastes));
+        toast.success("paste is created successfully");
+      }
+      else{
+        toast.error("Pest is already exists");
+      }
+      
     },
     updateToPastes: (state, action) => {
       const paste = action.payload;
@@ -34,7 +45,7 @@ export const pasteSlice = createSlice({
     },
     removeFromPastes: (state, action) => {
       const pasteId = action.payload;
-      console.log(pasteId);
+      // console.log(pasteId);
       const index = state.pastes.findIndex((item) => item._id === pasteId);
 
       if (index >= 0) {
