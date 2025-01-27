@@ -44,19 +44,19 @@ const Commands = () => {
               <div className="flex justify-between items-center mt-4">
                 <NavLink
                   to={`/create-commands/?commandId=${command._id}`}
-                  className="text-blue-500 hover:underline"
+                  className="text-blue-500 hover:underline border border-green-500 px-1 p-0.5 rounded"
                 >
                   Edit
                 </NavLink>
                 <NavLink
                   to={`/commands/${command._id}`}
-                  className="text-green-500 hover:underline"
+                  className="text-green-500 hover:underline border-red-500 border px-1 p-0.5 rounded"
                 >
                   View
                 </NavLink>
                 <button
                   onClick={() => handleDelete(command._id)}
-                  className="text-red-500 hover:underline"
+                  className="text-red-500 hover:underline border-blue-500 border px-1 p-0.5 rounded"
                 >
                   Delete
                 </button>
@@ -65,7 +65,7 @@ const Commands = () => {
                     navigator.clipboard.writeText(command.content);
                     toast.success("Copied to clipboard!");
                   }}
-                  className="text-blue-500 hover:underline"
+                  className="text-blue-500 hover:underline border-blue-500 border px-1 p-0.5 rounded"
                 >
                   Copy
                 </button>

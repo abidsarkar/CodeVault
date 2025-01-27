@@ -44,19 +44,19 @@ const Paste = () => {
               <div className="flex justify-between items-center mt-4">
                 <NavLink
                   to={`/?pasteId=${paste._id}`}
-                  className="text-blue-500 hover:underline"
+                  className="text-blue-500 hover:underline border border-green-500 px-1 p-0.5 rounded"
                 >
                   Edit
                 </NavLink>
                 <NavLink
                   to={`/pastes/${paste._id}`}
-                  className="text-green-500 hover:underline"
+                  className="text-green-500 hover:underline border-red-500 border px-1 p-0.5 rounded"
                 >
                   View
                 </NavLink>
                 <button
                   onClick={() => handleDelete(paste._id)}
-                  className="text-red-500 hover:underline"
+                  className="text-red-500 hover:underline border-blue-500 border px-1 p-0.5 rounded"
                 >
                   Delete
                 </button>
@@ -65,7 +65,7 @@ const Paste = () => {
                     navigator.clipboard.writeText(paste.content);
                     toast.success("Copied to clipboard!");
                   }}
-                  className="text-blue-500 hover:underline"
+                  className="text-purple-500 hover:underline border-blue-500 border px-1 p-0.5 rounded"
                 >
                   Copy
                 </button>
