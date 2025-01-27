@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromPastes } from "../redux/pasteSlice";
 import toast from "react-hot-toast";
 import { NavLink } from "react-router-dom";
+import { removeFromCommands } from "../redux/commandsSlice";
 
-const Paste = () => {
-  const pastes = useSelector((state) => state.paste.pastes);
+const Commands = () => {
+  const commands = useSelector((state) => state.command.commands);
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
 
-  const filteredData = pastes.filter((paste) =>
-    paste.title.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredData = commands.filter((command) =>
+    command.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  function handleDelete(pasteId) {
-    dispatch(removeFromPastes(pasteId));
+  function handleDelete(commandId) {
+    dispatch(removeFromCommands(commandId));
   }
 
   return (
@@ -23,46 +23,46 @@ const Paste = () => {
         <input
           className="border bg-black text-white border-green-300 rounded-lg p-2 w-full max-w-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           type="search"
-          placeholder="Search pastes..."
+          placeholder="Search commands..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-      <div className=" mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filteredData.length === 0 ? (
-          <p className="text-red-500 text-center text-lg ">No Pest found</p>
+          <p className="text-red-500 text-center text-lg">No commands found.</p>
         ) : (
-          filteredData.map((paste) => (
+          filteredData.map((command) => (
             <div
-              key={paste._id}
-              className="bg-white  border rounded-lg shadow-lg p-4 hover:shadow-xl transition"
+              key={command._id}
+              className="bg-white border rounded-lg shadow-lg p-4 hover:shadow-xl transition"
             >
               <h3 className="text-center text-xl uppercase font-semibold text-gray-800">
-                {paste.title}
+                {command.title}
               </h3>
-              <p className="text-black truncate">{paste.content}</p>
+              <p className="text-black truncate">{command.content}</p>
               <div className="flex justify-between items-center mt-4">
                 <NavLink
-                  to={`/?pasteId=${paste._id}`}
+                  to={`/create-commands/?commandId=${command._id}`}
                   className="text-blue-500 hover:underline"
                 >
                   Edit
                 </NavLink>
                 <NavLink
-                  to={`/pastes/${paste._id}`}
+                  to={`/commands/${command._id}`}
                   className="text-green-500 hover:underline"
                 >
                   View
                 </NavLink>
                 <button
-                  onClick={() => handleDelete(paste._id)}
+                  onClick={() => handleDelete(command._id)}
                   className="text-red-500 hover:underline"
                 >
                   Delete
                 </button>
                 <button
                   onClick={() => {
-                    navigator.clipboard.writeText(paste.content);
+                    navigator.clipboard.writeText(command.content);
                     toast.success("Copied to clipboard!");
                   }}
                   className="text-blue-500 hover:underline"
@@ -78,4 +78,4 @@ const Paste = () => {
   );
 };
 
-export default Paste;
+export default Commands;

@@ -2,13 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-const ViewPaste = () => {
-  const { id } = useParams();
-  const paste = useSelector((state) =>
-    state.paste.pastes.find((p) => p._id === id)
+const ViewCommands = () => {
+const { id } = useParams();
+  const command = useSelector((state) =>
+    state.command.commands.find((p) => p._id === id)
   );
-//date show nice away
-
 // Corrected FormattedDate component 
 function FormattedDate({ createdAt }) {
   const date = new Date(createdAt);
@@ -26,16 +24,17 @@ function FormattedDate({ createdAt }) {
   const formattedDate = date.toLocaleString("en-US", options); 
   return <span>{formattedDate}</span>;
 }
+
   return (
     <div className="p-6">
       <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6">
-        {paste ? (
+        {command ? (
           <>
-            <h1 className="text-2xl font-bold uppercase text-center text-gray-800">{paste.title}</h1>
-            <p className="mt-4 text-black">{paste.content}</p>
+            <h1 className="text-2xl font-bold uppercase text-center text-gray-800">{command.title}</h1>
+            <p className="mt-4 text-black">{command.content}</p>
             <p className="mt-4 text-red-500 text-sm">
               {/* Created At: {new Date(paste.createdAt).toLocaleString()} */}
-              Created At: <FormattedDate createdAt={paste.createdAt} />
+              Created At: <FormattedDate createdAt={command.createdAt} />
             </p>
           </>
         ) : (
@@ -45,5 +44,4 @@ function FormattedDate({ createdAt }) {
     </div>
   );
 };
-
-export default ViewPaste;
+export default ViewCommands

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 import { addToPastes, updateToPastes } from "../redux/pasteSlice";
 
 const Home = () => {
@@ -41,7 +41,15 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center p-6">
       <div className="w-full max-w-3xl">
-        <h1 className="text-2xl font-bold text-gray-700 mb-4">Create a New Paste</h1>
+        <div className="flex justify-between p-4 items-center">
+          <h1 className="text-2xl font-bold text-gray-700 mb-4">
+            Create a New Paste
+          </h1>
+
+          <button className="bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-600">
+            <NavLink to={"/create-commands"}>Create Command</NavLink>
+          </button>
+        </div>
         <div className="flex flex-col gap-4">
           <input
             className="border border-gray-300 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
